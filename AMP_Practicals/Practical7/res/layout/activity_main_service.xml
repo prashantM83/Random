@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 7a: Service Layout -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button android:id="@+id/startService"  android:text="Start Service"  android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <Button android:id="@+id/bindService"   android:text="Bind Service"   android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <Button android:id="@+id/unbindService" android:text="Unbind Service" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <Button android:id="@+id/stopService"   android:text="Stop Service"   android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+</LinearLayout>

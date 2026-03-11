@@ -1,0 +1,1727 @@
+Practical 1
+1] Programming Resources Android Resources: (Color, Theme, String, Drawable, Dimension, Image) activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:gravity="center" android:orientation="vertical" android:padding="@dimen/padding_standard">
+
+<ImageView android:id="@+id/myImage" android:layout_width="150dp" android:layout_height="150dp" android:src="@drawable/cats" />
+
+<TextView android:id="@+id/myText"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/hello_text" android:textColor="@color/myTextColor" android:textSize="@dimen/text_size_large" android:background="@drawable/rounded_box" android:padding="@dimen/padding_standard"/>
+</LinearLayout>
+
+colors.xml
+<resources>
+<color name="colorPrimary">#6200EE</color>
+<color name="colorPrimaryDark">#3700B3</color>
+<color name="colorAccent">#03DAC5</color>
+<color name="myTextColor">#FF5722</color>
+</resources>
+
+strings.xml
+<resources>
+<color name="colorPrimary">#6200EE</color>
+<color name="colorPrimaryDark">#3700B3</color>
+<color name="colorAccent">#03DAC5</color>
+<color name="myTextColor">#FF5722</color>
+</resources>
+
+dimens.xml
+<resources>
+<color name="colorPrimary">#6200EE</color>
+<color name="colorPrimaryDark">#3700B3</color>
+<color name="colorAccent">#03DAC5</color>
+<color name="myTextColor">#FF5722</color>
+</resources>
+ 
+themes.xml
+<resources>
+<color name="colorPrimary">#6200EE</color>
+<color name="colorPrimaryDark">#3700B3</color>
+<color name="colorAccent">#03DAC5</color>
+<color name="myTextColor">#FF5722</color>
+</resources>
+rounded_box.xml
+<resources>
+<color name="colorPrimary">#6200EE</color>
+<color name="colorPrimaryDark">#3700B3</color>
+<color name="colorAccent">#03DAC5</color>
+<color name="myTextColor">#FF5722</color>
+</resources>
+MainActivity.java
+package com.example.pract1;
+
+import androidx.appcompat.app.AppCompatActivity; import android.os.Bundle;
+import android.widget.ImageView; import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity { @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setTheme(R.style.Theme_ResourceDemo); setContentView(R.layout.activity_main);  TextView textView = findViewById(R.id.myText);
+ImageView imageView = findViewById(R.id.myImage); textView.setText(getString(R.string.hello_text)); textView.setTextColor(getColor(R.color.myTextColor)); imageView.setImageResource(R.drawable.cats);
+}
+}
+Output:
+ 
+Practical 2
+
+a]	The Life cycle methods of Android Activity MainActivity.java:
+package com.example.practical2;
+
+import android.os.Bundle; import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { String TAG = "ActivityLifeCycle";
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); Log.d(TAG, "onCreate called");
+}
+@Override
+protected void onStart() { super.onStart();
+Log.d(TAG, "onStart called");
+}
+@Override
+protected void onResume() { super.onResume();
+Log.d(TAG, "onResume called");
+}
+@Override
+protected void onPause() { super.onPause();
+Log.d(TAG, "onPause called");
+}
+@Override
+protected void onStop() { super.onStop();
+Log.d(TAG, "onStop called");
+}
+@Override
+protected void onRestart() { super.onRestart();
+Log.d(TAG, "onRestart called");
+}
+@Override
+protected void onDestroy() { super.onDestroy();
+Log.d(TAG, "onDestroy called");
+}
+}
+ 
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:gravity="center" android:orientation="vertical">
+
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Activity Life Cycle Demo" android:textSize="20sp" />
+</LinearLayout> Output:
+ 
+b]	Lifecycle of fragments and multiple fragments MainActivity.java
+package com.example.practical2; import android.os.Bundle; import android.util.Log;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity; import androidx.fragment.app.FragmentManager; import androidx.fragment.app.FragmentTransaction;
+
+public class MainActivity extends AppCompatActivity { String TAG = "MainActivity";
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); Log.d(TAG, "onCreate");
+Button btnLoadFragment = findViewById(R.id.btnLoadFragment); btnLoadFragment.setOnClickListener(v -> {
+Log.d(TAG, "Button clicked - loading Fragment"); Fragment1 fragment = new Fragment1(); FragmentManager fm = getSupportFragmentManager(); FragmentTransaction ft = fm.beginTransaction(); ft.replace(R.id.fragmentContainer, fragment); ft.commit();
+});
+}
+@Override protected void onStart() { super.onStart();
+Log.d(TAG, "onStart");
+}
+@Override protected void onResume() { super.onResume();
+Log.d(TAG, "onResume");
+}
+@Override protected void onPause() { super.onPause();
+Log.d(TAG, "onPause");
+}
+@Override protected void onStop() { super.onStop();
+Log.d(TAG, "onStop");
+}
+@Override protected void onDestroy() { super.onDestroy();
+Log.d(TAG, "onDestroy");
+}
+}
+ 
+Fragment1.java
+package com.example.practical2; import android.os.Bundle; import android.util.Log;
+import android.view.LayoutInflater; import android.view.View;
+import android.view.ViewGroup; import androidx.annotation.NonNull; import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+public class Fragment1 extends Fragment { String TAG = "Fragment1";
+@Override
+public void onCreate(@Nullable Bundle savedInstanceState) { super.onCreate(savedInstanceState);
+Log.d(TAG, "onCreate");
+}
+@Nullable @Override
+public View onCreateView( @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+@Nullable Bundle savedInstanceState) { Log.d(TAG, "onCreateView");
+return inflater.inflate(R.layout.fragment_1, container, false);
+}
+@Override
+public void onStart() { super.onStart(); Log.d(TAG, "onStart");
+}
+@Override
+public void onResume() { super.onResume(); Log.d(TAG, "onResume");
+}
+@Override
+public void onPause() { super.onPause(); Log.d(TAG, "onPause");
+}
+@Override
+public void onStop() { super.onStop(); Log.d(TAG, "onStop");
+}
+@Override
+public void onDestroyView() { super.onDestroyView(); Log.d(TAG, "onDestroyView");
+ 
+}
+@Override
+public void onDestroy() { super.onDestroy(); Log.d(TAG, "onDestroy");
+}
+}
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="16dp">
+<Button
+android:id="@+id/btnLoadFragment" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Load Fragment" />
+<FrameLayout android:id="@+id/fragmentContainer" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="16dp" />
+</LinearLayout>
+Fragment_1.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:gravity="center" android:orientation="vertical">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="This is Fragment 1" android:textSize="20sp" />
+</LinearLayout> Output:
+ 
+Practical 3
+3] Programs related to different Layouts Coordinate, Linear, Relative, Table, Absolute, Frame, List View,View.
+
+Relative Layout activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main" android:layout_height="match_parent" android:layout_width="match_parent" tools:context=".MainActivity">
+<TextView android:id="@+id/lblComments" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Comments" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+
+<EditText android:id="@+id/txtComments" android:layout_width="fill_parent" android:layout_height="69dp"
+android:layout_below="@id/lblComments" android:layout_alignLeft="@id/lblComments" android:layout_centerHorizontal="true" android:layout_marginTop="-4dp" android:ems="10"
+android:inputType="text" android:text="Name" android:textSize="18sp" />
+
+<Button
+android:id="@+id/btnShow" android:layout_width="300px" android:layout_height="wrap_content" android:text="Show" android:onClick="show" android:layout_below="@id/txtComments"
+android:layout_alignLeft="@id/txtComments"
+/>
+
+<Button
+android:id="@+id/btnClear" android:layout_width="300px" android:layout_height="wrap_content" android:text="Clear" android:onClick="clear" android:layout_below="@id/txtComments"
+ 
+android:layout_alignRight="@id/txtComments"
+/>
+</RelativeLayout>
+
+MainActivity.java
+package com.example.relativelayout;
+
+import android.os.Bundle;
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity; import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat; import android.view.View;
+import android.widget.EditText; import android.widget.Toast;
+public class MainActivity extends AppCompatActivity { @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+public void show(View v)
+{
+EditText d=findViewById(R.id.txtComments); String str = d.getText().toString();
+Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
+}
+public void clear(View v)
+{
+EditText d=findViewById(R.id.txtComments); d.setText("");
+Toast.makeText(this,"Text Clear",Toast.LENGTH_SHORT).show();
+}
+}
+Output:
+ 
+Linear Layout- vertical linear layout
+
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="20dp">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Login Form" android:textSize="22sp" android:textStyle="bold" />
+<EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Username" />
+<EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Password" android:inputType="textPassword" />
+<Button
+android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Login" />
+</LinearLayout>
+ 
+MainActivity.java
+package com.example.linearlayout; import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+}
+
+Output:
+
+ 
+Horizontal linear layout activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="horizontal" android:padding="16dp">
+<Button
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Button 1" />
+<Button
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Button 2" />
+<Button
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Button 3" />
+</LinearLayout>
+
+MainActivity.java
+package com.example.horizontallinearlayout;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+}
+Output:
+ 
+TableLayout
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:padding="16dp" android:stretchColumns="1">
+<TableRow>
+<TextView android:text="Username" android:padding="8dp" />
+<EditText android:hint="Enter username" />
+</TableRow>
+<TableRow>
+<TextView android:text="Password" android:padding="8dp" />
+<EditText android:hint="Enter password" android:inputType="textPassword" />
+</TableRow>
+<TableRow>
+<TextView />
+<Button android:text="Login" />
+</TableRow>
+</TableLayout>
+
+MainActivity.java
+package com.example.table; import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+}
+Output:
+ 
+Scroll Layout activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent">
+
+<!-- ScrollView can have ONLY ONE child -->
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ScrollView Example" android:textSize="20sp" android:textStyle="bold" />
+
+<EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Field 1" />
+
+<EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Field 2" />
+
+<EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Field 3" />
+
+<EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Field 4" />
+
+<EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Field 5" />
+
+<Button
+android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Submit" />
+
+</LinearLayout>
+
+</ScrollView>
+ 
+MainActivity.java
+package com.example.scroll;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+}
+
+Output:
+
+ 
+AbsoluteLayout activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"  android:layout_height="match_parent">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Absolute Layout" android:layout_x="50dp" android:layout_y="30dp" android:textSize="20sp" />
+<Button
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Button 1" android:layout_x="50dp" android:layout_y="100dp" />
+<Button
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Button 2" android:layout_x="180dp" android:layout_y="100dp" />
+</AbsoluteLayout>
+
+MainActivity.java
+package com.example.absolute; import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+}
+ 
+ 
+ListView
+
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="16dp">
+
+<TextView
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ListView Example" android:textSize="20sp" android:textStyle="bold" />
+
+<ListView
+android:id="@+id/listView" android:layout_width="match_parent" android:layout_height="wrap_content" />
+</LinearLayout>
+ 
+MainActivity.java
+package com.example.listview;
+
+import android.os.Bundle;
+import android.widget.ArrayAdapter; import android.widget.ListView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { ListView listView;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);  listView = findViewById(R.id.listView);
+String[] items = { "Android", "Java",
+"Python",
+"C",
+"C++",
+"Kotlin"
+};
+ArrayAdapter<String> adapter =
+new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+
+listView.setAdapter(adapter);
+}
+}
+Output:
+
+ 
+GridView activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="16dp">
+
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GridView Example" android:textSize="20sp" android:textStyle="bold" />
+
+<GridView  android:id="@+id/gridView" android:layout_width="match_parent"
+android:layout_height="wrap_content" android:numColumns="2" android:verticalSpacing="10dp" android:horizontalSpacing="10dp" android:stretchMode="columnWidth" android:gravity="center" />
+</LinearLayout>
+ 
+MainActivity.java
+package com.example.gridview;
+
+import android.os.Bundle;
+import android.widget.ArrayAdapter; import android.widget.GridView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { GridView gridView;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+gridView = findViewById(R.id.gridView); String[] items = {
+"Android", "Java",
+"Python",
+"C",
+"C++",
+"Kotlin"
+};
+ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+android.R.layout.simple_list_item_1, items);
+gridView.setAdapter(adapter);
+}
+}
+Output:
+ 
+ 
+FrameLayout activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:layout_width="match_parent" android:layout_height="match_parent" android:text="Background Text" android:textSize="22sp" android:gravity="center" android:background="#FFC107" android:textColor="#000000" />
+<Button
+android:layout_width="200dp" android:layout_height="wrap_content" android:text="Click Me" android:layout_gravity="center" />
+</FrameLayout>
+
+MainActivity.java
+package com.example.framelayout; import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}}
+Output:
+ 
+Practical 4
+4 ] Programming UI elements AppBar, Fragments, UI Components UI elements AppBar
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+android:layout_width="match_parent" android:layout_height="match_parent">
+
+<androidx.appcompat.widget.Toolbar android:id="@+id/toolbar" android:layout_width="match_parent" android:layout_height="?attr/actionBarSize" android:background="#6200EE" android:title="My AppBar" android:titleTextColor="#FFFFFF"
+app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
+
+<LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:padding="16dp">
+
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Welcome to the App!" android:textSize="20sp" android:paddingBottom="10dp"/>
+
+<Button
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Click Me" />
+
+</LinearLayout>
+</LinearLayout>
+ 
+MainActivity.java
+package com.example.pract4;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity; import androidx.appcompat.widget.Toolbar;
+
+public class MainActivity extends AppCompatActivity { @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+Toolbar toolbar = findViewById(R.id.toolbar); setSupportActionBar(toolbar);
+}
+}
+
+
+output:
+
+
+ 
+Fragments activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/fragmentContainer" android:layout_width="match_parent" android:layout_height="match_parent">
+</FrameLayout>
+
+fragment_example.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="16dp">
+<TextView android:id="@+id/textViewFragment" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hello from Fragment!" android:textSize="20sp" android:paddingBottom="10dp"/>
+<Button
+android:id="@+id/buttonFragment" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Click Me"/>
+</LinearLayout>
+
+examplefragment.java package com.example.pract4b; import android.os.Bundle;
+import android.view.LayoutInflater; import android.view.View;
+import android.view.ViewGroup; import android.widget.Button; import android.widget.Toast;
+import androidx.annotation.NonNull; import androidx.annotation.Nullable; import androidx.fragment.app.Fragment;
+
+public class ExampleFragment extends Fragment { @Nullable
+@Override
+public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+@Nullable Bundle savedInstanceState) {
+// Inflate the fragment layout
+View view = inflater.inflate(R.layout.fragment_example, container, false); Button button = view.findViewById(R.id.buttonFragment); button.setOnClickListener(v ->
+Toast.makeText(getActivity(), "Button clicked in Fragment!", Toast.LENGTH_SHORT).show()
+);
+ 
+return view;
+}
+}
+
+MainActivity.java
+package com.example.pract4b; import android.os.Bundle;
+import android.view.LayoutInflater; import android.view.View;
+import android.view.ViewGroup; import android.widget.Button; import android.widget.Toast;
+import androidx.annotation.NonNull; import androidx.annotation.Nullable; import androidx.fragment.app.Fragment;
+public class examplefragment extends Fragment{ @Nullable
+@Override
+public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+@Nullable Bundle savedInstanceState) {
+View view = inflater.inflate(R.layout.fragment_example, container, false); Button button = view.findViewById(R.id.buttonFragment); button.setOnClickListener(v ->
+Toast.makeText(getActivity(), "Button clicked in Fragment!", Toast.LENGTH_SHORT).show()
+);
+return view;
+}
+}
+output:
+ 
+UI components:
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="16dp">
+<EditText android:id="@+id/editTextName" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Enter your name" />
+<Button
+android:id="@+id/btnSubmit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Submit" android:layout_marginTop="10dp" />
+<ImageButton android:id="@+id/imageButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/image1"
+android:contentDescription="Camera Button" android:layout_marginTop="10dp" />
+<CheckBox android:id="@+id/checkBox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="I agree to terms" android:layout_marginTop="10dp" />
+<RadioGroup android:id="@+id/radioGroup" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp">
+<RadioButton android:id="@+id/radioMale" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Male" />
+<RadioButton android:id="@+id/radioFemale" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Female" />
+</RadioGroup>
+<ToggleButton android:id="@+id/toggleButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textOn="ON" android:textOff="OFF" android:layout_marginTop="10dp" />
+</LinearLayout>
+ 
+MainActivity.java
+package com.example.pract4c; import android.os.Bundle; import android.widget.*;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+EditText editText; Button button;
+ImageButton imageButton; CheckBox checkBox; RadioGroup radioGroup; ToggleButton toggleButton; @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+editText = findViewById(R.id.editTextName); button = findViewById(R.id.btnSubmit); imageButton = findViewById(R.id.imageButton); checkBox = findViewById(R.id.checkBox); radioGroup = findViewById(R.id.radioGroup); toggleButton = findViewById(R.id.toggleButton); button.setOnClickListener(v -> {
+String name = editText.getText().toString();
+Toast.makeText(this, "Name: " + name, Toast.LENGTH_SHORT).show();
+});
+imageButton.setOnClickListener(v ->
+Toast.makeText(this, "ImageButton Clicked", Toast.LENGTH_SHORT).show()
+);
+toggleButton.setOnCheckedChangeListener((buttonView, isChecked) -> { if (isChecked)
+Toast.makeText(this, "Toggle ON", Toast.LENGTH_SHORT).show(); else
+Toast.makeText(this, "Toggle OFF", Toast.LENGTH_SHORT).show();
+});
+}
+}
+
+Output:
+ 
+Practical 5 5] Programming menus, dialog, dialog fragments Menus:
+Make sure your project structure looks exactly like this:Menu_main.xml app
+└── src
+└── main
+├── java
+│  └── com.example.prac5amenus
+│	└── MainActivity.java
+└── res
+├── layout
+│  └── activity_main.xml
+└── menu
+└── menu_main.xml
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:gravity="center" android:orientation="vertical">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Menu with Five Items" android:textSize="20sp" />
+</LinearLayout>
+
+AndriodManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<application android:allowBackup="true"
+android:dataExtractionRules="@xml/data_extraction_rules" android:fullBackupContent="@xml/backup_rules" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.Prac5aMenus">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNCHER"/>
+</intent-filter>
+</activity>
+</application>
+</manifest>
+ 
+Themes.xml
+<resources xmlns:tools="http://schemas.android.com/tools">
+<style name="Base.Theme.Prac5aMenus" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+<!-- Customize your theme here -->
+</style>
+<style name="Theme.Prac5aMenus" parent="Base.Theme.Prac5aMenus" />
+</resources>
+
+MainActivity.java
+package com.example.prcat5a;
+
+import android.os.Bundle; import android.view.Menu; import android.view.MenuItem; import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+// Create menu
+@Override
+public boolean onCreateOptionsMenu(Menu menu) { getMenuInflater().inflate(R.menu.menu_main, menu); return true;
+}
+// Handle menu item selection
+@Override
+public boolean onOptionsItemSelected(MenuItem item) { int id = item.getItemId();
+if (id == R.id.menu_home) {
+Toast.makeText(this, "Home Selected", Toast.LENGTH_SHORT).show(); return true;
+} else if (id == R.id.menu_profile) {
+Toast.makeText(this, "Profile Selected", Toast.LENGTH_SHORT).show(); return true;
+} else if (id == R.id.menu_settings) {
+Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show(); return true;
+} else if (id == R.id.menu_help) {
+Toast.makeText(this, "Help Selected", Toast.LENGTH_SHORT).show(); return true;
+} else if (id == R.id.menu_exit) { finish();
+return true;
+}
+return super.onOptionsItemSelected(item);
+}
+}
+ 
+menu_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item
+android:id="@+id/menu_home" android:title="Home" />
+
+<item
+android:id="@+id/menu_profile" android:title="Profile" />
+
+<item
+android:id="@+id/menu_settings" android:title="Settings" />
+
+<item
+android:id="@+id/menu_help" android:title="Help" />
+
+<item
+android:id="@+id/menu_exit" android:title="Exit" />
+</menu>
+Output:
+ 
+Dialog:
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+android:gravity="center" android:padding="20dp" android:layout_width="match_parent" android:layout_height="match_parent">
+<Button
+android:id="@+id/btnDatePicker" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Select Date" android:layout_marginBottom="20dp"/>
+<Button
+android:id="@+id/btnTimePicker" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Select Time"/>
+</LinearLayout>
+
+MainActivity.java
+package com.example.pract5b;
+import android.app.DatePickerDialog; import android.app.TimePickerDialog; import android.os.Bundle;
+import android.widget.Button; import android.widget.DatePicker; import android.widget.TimePicker; import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity; import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity { Button btnDatePicker, btnTimePicker;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); btnDatePicker = findViewById(R.id.btnDatePicker); btnTimePicker = findViewById(R.id.btnTimePicker);
+// DATE PICKER
+btnDatePicker.setOnClickListener(v -> { Calendar calendar = Calendar.getInstance(); int year = calendar.get(Calendar.YEAR);
+int month = calendar.get(Calendar.MONTH);
+int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+DatePickerDialog datePickerDialog = new DatePickerDialog( MainActivity.this,
+(view, selectedYear, selectedMonth, selectedDay) -> {
+// Note: Month starts from 0, so add 1
+String date = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+ 
+Toast.makeText(MainActivity.this, "Selected Date: " + date, Toast.LENGTH_SHORT).show();
+},
+year, month, day
+);
+datePickerDialog.show();
+});
+// TIME PICKER
+btnTimePicker.setOnClickListener(v -> { Calendar calendar = Calendar.getInstance();
+int hour = calendar.get(Calendar.HOUR_OF_DAY); int minute = calendar.get(Calendar.MINUTE);
+TimePickerDialog timePickerDialog = new TimePickerDialog( MainActivity.this,
+(view, selectedHour, selectedMinute) -> {
+String time = selectedHour + ":" + String.format("%02d", selectedMinute); Toast.makeText(MainActivity.this, "Selected Time: " + time,
+Toast.LENGTH_SHORT).show();
+},
+hour, minute, true // true = 24-hour format
+);
+timePickerDialog.show();
+});
+}
+}
+Output:
+
+ 
+Dialog Fragments:
+app/
+└── java/com/example/dialogdemo/
+├── MainActivity.java
+└── ButtonDialogFragment.java
+└── res/
+└── layout/
+├── activity_main.xml
+└── dialog_button.xml
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:gravity="center" android:padding="24dp">
+<Button
+android:id="@+id/btnOne" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Button One" />
+<Button
+android:id="@+id/btnTwo" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Button Two" android:layout_marginTop="16dp" />
+</LinearLayout>
+
+ButtonDialogFragment.java package com.example.pract5c; import android.os.Bundle;
+import android.view.LayoutInflater; import android.view.View;
+import android.view.ViewGroup; import android.widget.Button; import android.widget.TextView; import androidx.annotation.NonNull; import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
+public class ButtonDialogFragment extends DialogFragment { private static final String ARG_MESSAGE = "message";
+public static ButtonDialogFragment newInstance(String message) { ButtonDialogFragment fragment = new ButtonDialogFragment(); Bundle bundle = new Bundle(); bundle.putString(ARG_MESSAGE, message); fragment.setArguments(bundle);
+return fragment;
+}
+@Nullable @Override
+public View onCreateView( @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+@Nullable Bundle savedInstanceState) {
+View view = inflater.inflate(R.layout.dialog_button, container, false);
+ 
+TextView tvMessage = view.findViewById(R.id.tvMessage); Button btnOk = view.findViewById(R.id.btnOk);
+if (getArguments() != null) { tvMessage.setText(getArguments().getString(ARG_MESSAGE));
+}
+btnOk.setOnClickListener(v -> dismiss()); return view;
+}
+}
+
+MainActivity.java
+package com.example.pract5c;
+
+import android.os.Bundle; import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+Button btnOne = findViewById(R.id.btnOne); Button btnTwo = findViewById(R.id.btnTwo); btnOne.setOnClickListener(v ->
+showDialog("Button One clicked")
+);
+btnTwo.setOnClickListener(v -> showDialog("Button Two clicked")
+);
+}
+private void showDialog(String message) { ButtonDialogFragment dialog =
+ButtonDialogFragment.newInstance(message); dialog.show(getSupportFragmentManager(), "ButtonDialog");
+}
+}
+
+dialog_button.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content"
+android:orientation="vertical" android:padding="24dp">
+<TextView android:id="@+id/tvMessage" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="18sp"
+android:textColor="@android:color/black" android:text="Button Clicked" android:paddingBottom="16dp"/>
+<Button
+android:id="@+id/btnOk" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="OK"/>
+</LinearLayout>
+
+Themes.xml
+ 
+<resources xmlns:tools="http://schemas.android.com/tools">
+<style name="Theme.Prac5AMenus" parent="Theme.AppCompat.DayNight.DarkActionBar">
+</style>
+<style name="Theme.Prac5aMenus" parent="Base.Theme.Pract5c" />
+</resources>
+
+AndriodManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<application android:allowBackup="true"
+android:dataExtractionRules="@xml/data_extraction_rules" android:fullBackupContent="@xml/backup_rules" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.Prac5AMenus">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNCHER"/>
+</intent-filter>
+</activity>
+</application>
+</manifest>
+Output:
+
+ 
+Practical 6
+Programs on Intents, Events, Listeners and Adapters The Android Intent Class, Using Events and Event Listeners
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:gravity="center" android:orientation="vertical">
+<Button
+android:id="@+id/btnNext" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Go to Second Activity"/>
+</LinearLayout>
+Activity_second.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:gravity="center" android:orientation="vertical">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Welcome to Second Activity" android:textSize="20sp"/>
+</LinearLayout>
+MainActivity.java
+package com.example.pract6; import android.content.Intent; import android.os.Bundle; import android.view.View; import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { Button btnNext;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+btnNext = findViewById(R.id.btnNext); btnNext.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+Intent intent = new Intent(MainActivity.this, secondactivity.class); startActivity(intent);
+}
+});
+}
+}
+secondactivity.java
+package com.example.pract6; import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class secondactivity extends AppCompatActivity { @Override
+ 
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_second);
+}
+}
+AndriodManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android" tools:ignore="ExtraText">
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+android:theme="@style/Theme.Prac5AMenus" tools:targetApi="31">
+<activity android:name=".secondactivity" android:exported="false" />
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNCHER" />
+</intent-filter>
+</activity>
+</application>
+</manifest>
+
+Themes.xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+<style name="Theme.Prac5AMenus" parent="Theme.AppCompat.DayNight.DarkActionBar">
+</style>
+</resources>
+
+Output:
+ 
+Practical 7 Programs on Services, notification and broadcast receivers MyService.java
+package com.example.practical7;
+import android.app.Service; import android.content.Intent; import android.os.IBinder; import android.util.Log; import android.widget.Toast;
+import androidx.annotation.Nullable;
+
+public class MyService extends Service { private static final String TAG = "MyService"; @Override
+public void onCreate() { super.onCreate();
+Toast.makeText(this, "Service Created", Toast.LENGTH_SHORT).show(); Log.d(TAG, "onCreate()");
+}@Override
+public int onStartCommand(Intent intent, int flags, int startId) { Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show(); Log.d(TAG, "onStartCommand()");
+return START_STICKY;
+}@Nullable @Override
+public IBinder onBind(Intent intent) {
+Toast.makeText(this, "Service Bound", Toast.LENGTH_SHORT).show(); Log.d(TAG, "onBind()");
+return null;  // No binding object used
+}@Override
+public boolean onUnbind(Intent intent) {
+Toast.makeText(this, "Service Unbound", Toast.LENGTH_SHORT).show(); Log.d(TAG, "onUnbind()");
+return true;  // Allows onRebind() to be called
+}@Override
+public void onRebind(Intent intent) { super.onRebind(intent);
+Toast.makeText(this, "Service Rebound", Toast.LENGTH_SHORT).show(); Log.d(TAG, "onRebind()");
+}@Override
+public void onDestroy() { super.onDestroy();
+Toast.makeText(this, "Service Destroyed", Toast.LENGTH_SHORT).show(); Log.d(TAG, "onDestroy()");
+}
+}
+ 
+MainActivity.java
+package com.example.practical7; import android.content.Intent;
+import android.content.ServiceConnection; import android.content.ComponentName; import android.os.Bundle;
+import android.os.IBinder; import android.view.View; import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { Button startBtn, stopBtn, bindBtn, unbindBtn;
+Intent serviceIntent; boolean isBound = false;
+ServiceConnection serviceConnection = new ServiceConnection() { @Override
+public void onServiceConnected(ComponentName name, IBinder service) { isBound = true;
+}
+@Override
+public void onServiceDisconnected(ComponentName name) { isBound = false;
+}
+};
+
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+startBtn = findViewById(R.id.startService); stopBtn = findViewById(R.id.stopService); bindBtn = findViewById(R.id.bindService); unbindBtn = findViewById(R.id.unbindService);
+
+serviceIntent = new Intent(this, MyService.class);
+
+startBtn.setOnClickListener(v -> startService(serviceIntent)); stopBtn.setOnClickListener(v -> stopService(serviceIntent));
+
+bindBtn.setOnClickListener(v -> { if (!isBound) {
+bindService(serviceIntent, serviceConnection, BIND_AUTO_CREATE); isBound = true;
+}
+});
+unbindBtn.setOnClickListener(v -> { if (isBound) {
+unbindService(serviceConnection); isBound = false;
+}
+});
+}
+}
+ 
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:gravity="center">
+
+<Button
+android:id="@+id/startService" android:text="Start Service" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+<Button
+android:id="@+id/bindService" android:text="Bind Service" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+<Button
+android:id="@+id/unbindService" android:text="Unbind Service" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+<Button
+android:id="@+id/stopService" android:text="Stop Service" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>
+ 
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.practical7">
+<application  android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN"/>
+<category android:name="android.intent.category.LAUNCHER"/>
+</intent-filter>
+</activity>
+<service android:name=".MyService" android:exported="false"/>
+</application>
+</manifest>
+AndroidManifest.xml – add this
+<service android:name=".MyService" />
+
+Output:
+ 
+Download a notification image and save the file as ic_notification.png Add this image in the drawable.
+
+MainActivity.java
+package com.example.notificationdemo; import android.Manifest;
+import android.app.NotificationChannel; import android.app.NotificationManager; import android.content.pm.PackageManager; import android.os.Build;
+import android.os.Bundle; import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity; import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+public class MainActivity extends AppCompatActivity { private static final String CHANNEL_ID = "MyChannel"; @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+Button notifyBtn = findViewById(R.id.btnNotify); createNotificationChannel();
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+ActivityCompat.requestPermissions(this,
+new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+}
+notifyBtn.setOnClickListener(v -> { NotificationCompat.Builder builder =
+new NotificationCompat.Builder(this, CHANNEL_ID)
+.setSmallIcon(android.R.drawable.ic_dialog_info)
+.setContentTitle("Notification Title")
+.setContentText("This is a simple notification")
+.setPriority(NotificationCompat.PRIORITY_DEFAULT); NotificationManagerCompat manager =
+NotificationManagerCompat.from(this); if (ActivityCompat.checkSelfPermission(this,
+Manifest.permission.POST_NOTIFICATIONS)
+!= PackageManager.PERMISSION_GRANTED) { return;
+}
+manager.notify(1, builder.build());
+});
+}
+private void createNotificationChannel() {
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+NotificationChannel channel = new NotificationChannel(
+CHANNEL_ID,
+"My Notification Channel", NotificationManager.IMPORTANCE_DEFAULT);
+channel.setDescription("Channel for Demo"); NotificationManager manager =
+getSystemService(NotificationManager.class); manager.createNotificationChannel(channel);
+} } }
+ 
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center"
+android:orientation="vertical">
+<Button
+android:id="@+id/btnNotify" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Show Notification"/>
+</LinearLayout>
+
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.notificationdemo">
+<uses-permission  android:name="android.permission.POST_NOTIFICATIONS"/>
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher"
+android:roundIcon="@mipmap/ic_launcher_round" android:label="@string/app_name" android:supportsRtl="true"
+android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN"/>
+<category android:name="android.intent.category.LAUNCHER"/>
+</intent-filter>
+</activity>
+</application>
+</manifest>
+Output:
+ 
+MainActivity.java
+package com.example.airplanemodedemo;
+
+import android.content.BroadcastReceiver; import android.content.Context;
+import android.content.Intent; import android.content.IntentFilter; import android.os.Bundle;
+import android.provider.Settings; import android.view.View; import android.widget.Button; import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { Button btnToggle;
+TextView tvStatus;
+AirplaneModeReceiver airplaneModeReceiver; @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);  btnToggle = findViewById(R.id.btnToggle); tvStatus = findViewById(R.id.tvStatus);
+btnToggle.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) {
+Intent intent = new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS); startActivity(intent);
+}
+});
+boolean isOn = Settings.Global.getInt( getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0) == 1;
+tvStatus.setText(isOn ? "Airplane Mode ON" : "Airplane Mode OFF"); airplaneModeReceiver = new AirplaneModeReceiver(tvStatus);
+IntentFilter filter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED); registerReceiver(airplaneModeReceiver, filter);
+}
+@Override
+protected void onDestroy() { super.onDestroy(); unregisterReceiver(airplaneModeReceiver);
+}
+}
+ 
+AirplaneModeReceiver.java
+package com.example.airplanemodedemo; import android.content.BroadcastReceiver; import android.content.Context;
+import android.content.Intent; import android.widget.TextView;
+
+public class AirplaneModeReceiver extends BroadcastReceiver { private TextView tvStatus;
+// Constructor receives the TextView reference
+public AirplaneModeReceiver(TextView tvStatus) { this.tvStatus = tvStatus;
+}
+
+@Override
+public void onReceive(Context context, Intent intent) {
+if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(intent.getAction())) { boolean isOn = intent.getBooleanExtra("state", false);
+
+// Update TextView on UI thread
+tvStatus.post(new Runnable() { @Override
+public void run() {
+tvStatus.setText(isOn ? "Airplane Mode ON" : "Airplane Mode OFF");
+}
+});
+}
+}
+}
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:gravity="center" android:padding="20dp">
+
+<TextView android:id="@+id/tvStatus"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Airplane Mode Status" android:textSize="20sp" android:layout_marginBottom="30dp"/>
+
+<Button
+android:id="@+id/btnToggle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Open Airplane Mode Settings"/>
+</LinearLayout>
+ 
+Androidmanifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<application android:allowBackup="true" android:label="AirplaneModeDemo"
+android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN"/>
+<category android:name="android.intent.category.LAUNCHER"/>
+</intent-filter>
+</activity>
+</application>
+
+</manifest>
+Output:
+ 
+ 
+Practical 8
+a.	Database Programming with SQLite Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="20dp">
+
+<EditText android:id="@+id/etName"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Enter Name" />
+
+<EditText android:id="@+id/etPhone"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Enter Phone" android:inputType="phone" />
+
+<Button
+android:id="@+id/btnAdd" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Add Contact" android:layout_marginTop="10dp"/>
+
+<Button
+android:id="@+id/btnUpdate" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Update Contact" android:layout_marginTop="5dp"/>
+
+<Button
+android:id="@+id/btnDelete" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Delete Contact" android:layout_marginTop="5dp"/>
+
+<Button
+android:id="@+id/btnView" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="View Contacts" android:layout_marginTop="10dp"/>
+
+<ListView  android:id="@+id/lvContacts" android:layout_width="match_parent" android:layout_height="wrap_content"
+ 
+android:layout_marginTop="20dp"/>
+</LinearLayout>
+MainActivity.java
+package com.example.pract8a; import android.database.Cursor; import android.os.Bundle; import android.view.View;
+import android.widget.AdapterView; import android.widget.ArrayAdapter; import android.widget.Button; import android.widget.EditText; import android.widget.ListView; import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity; import java.util.ArrayList;
+public class MainActivity extends AppCompatActivity {
+
+EditText etName, etPhone;
+Button btnAdd, btnUpdate, btnDelete, btnView; ListView lvContacts;
+
+DatabaseHelper dbHelper; ArrayList<Integer> contactIds; int selectedId = -1;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+etName = findViewById(R.id.etName); etPhone = findViewById(R.id.etPhone); btnAdd = findViewById(R.id.btnAdd); btnUpdate = findViewById(R.id.btnUpdate); btnDelete = findViewById(R.id.btnDelete); btnView = findViewById(R.id.btnView); lvContacts = findViewById(R.id.lvContacts);
+
+dbHelper = new DatabaseHelper(this); contactIds = new ArrayList<>();
+
+btnAdd.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) {
+
+String name = etName.getText().toString().trim(); String phone = etPhone.getText().toString().trim();
+
+if(name.isEmpty() || phone.isEmpty()) {
+Toast.makeText(MainActivity.this, "Enter name and phone", Toast.LENGTH_SHORT).show(); return;
+}
+ 
+if(dbHelper.insertContact(name, phone)) {
+Toast.makeText(MainActivity.this, "Contact added", Toast.LENGTH_SHORT).show(); etName.setText("");
+etPhone.setText(""); loadContacts();
+} else {
+Toast.makeText(MainActivity.this, "Insertion failed", Toast.LENGTH_SHORT).show();
+}
+}
+});
+
+btnUpdate.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) {
+
+if(selectedId == -1) {
+Toast.makeText(MainActivity.this, "Select a contact first", Toast.LENGTH_SHORT).show(); return;
+}
+
+String name = etName.getText().toString().trim(); String phone = etPhone.getText().toString().trim();
+
+if(name.isEmpty() || phone.isEmpty()) {
+Toast.makeText(MainActivity.this, "Enter name and phone", Toast.LENGTH_SHORT).show(); return;
+}
+
+if(dbHelper.updateContact(selectedId, name, phone)) {
+Toast.makeText(MainActivity.this, "Contact updated", Toast.LENGTH_SHORT).show(); etName.setText("");
+etPhone.setText(""); selectedId = -1; loadContacts();
+} else {
+Toast.makeText(MainActivity.this, "Update failed", Toast.LENGTH_SHORT).show();
+}
+}
+});
+
+btnDelete.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) {
+
+if(selectedId == -1) {
+Toast.makeText(MainActivity.this, "Select a contact first", Toast.LENGTH_SHORT).show(); return;
+}
+
+if(dbHelper.deleteContact(selectedId)) {
+Toast.makeText(MainActivity.this, "Contact deleted", Toast.LENGTH_SHORT).show(); etName.setText("");
+etPhone.setText(""); selectedId = -1; loadContacts();
+ 
+} else {
+Toast.makeText(MainActivity.this, "Deletion failed", Toast.LENGTH_SHORT).show();
+}
+}
+});
+
+btnView.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) { loadContacts();
+}
+});
+
+lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() { @Override
+public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) { selectedId = contactIds.get(position);
+Cursor cursor = dbHelper.getAllContacts(); if(cursor.moveToPosition(position)) {
+etName.setText(cursor.getString(cursor.getColumnIndexOrThrow("name"))); etPhone.setText(cursor.getString(cursor.getColumnIndexOrThrow("phone")));
+}
+}
+});
+
+loadContacts();
+}
+
+private void loadContacts() {
+Cursor cursor = dbHelper.getAllContacts(); ArrayList<String> list = new ArrayList<>(); contactIds.clear();
+
+if(cursor.getCount() == 0) { list.add("No records found");
+} else {
+while(cursor.moveToNext()) {
+int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+String name = cursor.getString(cursor.getColumnIndexOrThrow("name")); String phone = cursor.getString(cursor.getColumnIndexOrThrow("phone"));
+
+list.add(name + " - " + phone); contactIds.add(id);
+}
+}
+
+ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+lvContacts.setAdapter(adapter);
+}
+}
+ 
+DatabaseHelper.java
+package com.example.pract8a;
+
+import android.content.ContentValues; import android.content.Context; import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase; import android.database.sqlite.SQLiteOpenHelper;
+
+public class DatabaseHelper extends SQLiteOpenHelper {
+
+private static final String DATABASE_NAME = "Contacts.db"; private static final int DATABASE_VERSION = 1;
+
+private static final String TABLE_NAME = "contacts"; private static final String COL_ID = "id";
+private static final String COL_NAME = "name"; private static final String COL_PHONE = "phone";
+
+public DatabaseHelper(Context context) {
+super(context, DATABASE_NAME, null, DATABASE_VERSION);
+}
+
+@Override
+public void onCreate(SQLiteDatabase db) {
+String createTable = "CREATE TABLE " + TABLE_NAME + " (" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_NAME + " TEXT, " +
+COL_PHONE + " TEXT)";
+db.execSQL(createTable);
+}
+
+@Override
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+onCreate(db);
+}
+public boolean insertContact(String name, String phone) { SQLiteDatabase db = this.getWritableDatabase(); ContentValues values = new ContentValues(); values.put(COL_NAME, name); values.put(COL_PHONE, phone);
+
+long result = db.insert(TABLE_NAME, null, values); return result != -1;
+}
+public Cursor getAllContacts() {
+SQLiteDatabase db = this.getReadableDatabase();
+return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+}
+public boolean updateContact(int id, String name, String phone) { SQLiteDatabase db = this.getWritableDatabase(); ContentValues values = new ContentValues(); values.put(COL_NAME, name);
+values.put(COL_PHONE, phone);
+ 
+int result = db.update(TABLE_NAME, values, "id=?", new String[]{String.valueOf(id)});
+return result > 0;
+}
+public boolean deleteContact(int id) { SQLiteDatabase db = this.getWritableDatabase(); int result = db.delete(TABLE_NAME,
+"id=?", new String[]{String.valueOf(id)}); return result > 0;
+}
+}
+Output:
+ 	 
+ 
+b.	Programming Network Communications and Services (JSON)
+
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="20dp">
+<Button
+android:id="@+id/btnFetch" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Fetch Data" />
+<ListView android:id="@+id/lvData"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" />
+</LinearLayout>
+
+MainActivity.java
+package com.example.pract8b;
+
+import android.os.Bundle; import android.view.View;
+import android.widget.ArrayAdapter; import android.widget.Button; import android.widget.ListView; import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity; import com.android.volley.Request;
+import com.android.volley.RequestQueue; import com.android.volley.Response; import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest; import com.android.volley.toolbox.Volley;
+import org.json.JSONArray; import org.json.JSONObject; import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity { Button btnFetch;
+ListView lvData; ArrayList<String> dataList; ArrayAdapter<String> adapter; @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+btnFetch = findViewById(R.id.btnFetch); lvData = findViewById(R.id.lvData); dataList = new ArrayList<>();
+adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList); lvData.setAdapter(adapter);
+ 
+btnFetch.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) { fetchJSONData();
+}
+});
+}
+private void fetchJSONData() {
+String url = "https://jsonplaceholder.typicode.com/users"; // Sample JSON API RequestQueue requestQueue = Volley.newRequestQueue(this); JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+Request.Method.GET, url,
+null,
+new Response.Listener<JSONArray>() { @Override
+public void onResponse(JSONArray response) { dataList.clear();
+try {
+for (int i = 0; i < response.length(); i++) { JSONObject obj = response.getJSONObject(i); String name = obj.getString("name");
+String email = obj.getString("email");
+String city = obj.getJSONObject("address").getString("city"); dataList.add(name + " - " + email + " - " + city);
+}
+adapter.notifyDataSetChanged();
+} catch (Exception e) { e.printStackTrace();
+Toast.makeText(MainActivity.this, "Parsing error", Toast.LENGTH_SHORT).show();
+}
+}
+},
+new Response.ErrorListener() { @Override
+public void onErrorResponse(VolleyError error) {
+Toast.makeText(MainActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+}
+}
+);
+requestQueue.add(jsonArrayRequest);
+}
+}
+ 
+build.gradle.kts (module app)
+Add this inside dependencies in build.gradle.kts(app) in Gradle scripts implementation("com.android.volley:volley:1.2.1")
+
+dependencies {
+implementation("com.android.volley:volley:1.2.1")
+}
+
+AndriodManifest.xml
+Add this above application tag
+<uses-permission android:name="android.permission.INTERNET" /> Output:
+ 
+Practical 9 Programming threads, handles and asynchronized programs Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="20dp">
+<Button
+android:id="@+id/btnStartThread" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Start Thread" />
+<TextView android:id="@+id/tvThreadStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Thread not started" android:textSize="18sp" android:layout_marginTop="20dp"/>
+</LinearLayout>
+MainActivity.java
+package com.example.pract9a;
+
+import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { Button btnStartThread;
+TextView tvThreadStatus; @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); btnStartThread = findViewById(R.id.btnStartThread); tvThreadStatus = findViewById(R.id.tvThreadStatus);
+btnStartThread.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) {
+// Create a new thread
+Thread thread = new Thread(new Runnable() { @Override
+public void run() {
+// This is running in background thread
+for (int i = 1; i <= 5; i++) { final int count = i;
+// Update UI safely
+runOnUiThread(new Runnable() { @Override
+public void run() { tvThreadStatus.setText("Count: " + count);
+ 
+}
+});
+try {
+Thread.sleep(1000); // Sleep 1 second
+} catch (InterruptedException e) { e.printStackTrace();
+}
+}
+// Final message
+runOnUiThread(new Runnable() { @Override
+public void run() { tvThreadStatus.setText("Thread finished!");
+ 
+
+
+}
+});
+ 
+}
+});
+ 
+
+}
+});
+}
+}
+ 
+thread.start();
+ 
+Output:
+ 
+ 
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="20dp">
+
+<Button
+android:id="@+id/btnStartStop" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Start Timer" />
+
+<TextView android:id="@+id/tvTimer"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Time: 0" android:textSize="18sp" android:layout_marginTop="20dp" />
+</LinearLayout>
+
+MainActivity.java
+package com.example.pract9b;
+
+import android.os.Bundle; import android.os.Handler; import android.view.View; import android.widget.Button; import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+Button btnStartStop; TextView tvTimer; int counter = 0;
+boolean isRunning = false; Handler handler = new Handler();
+// Runnable that updates the UI every second
+Runnable runnable = new Runnable() { @Override
+public void run() { counter++;
+tvTimer.setText("Time: " + counter);
+
+// Repeat every 1 second
+handler.postDelayed(this, 1000);
+}
+};
+ 
+@Override
+
+
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+btnStartStop = findViewById(R.id.btnStartStop); tvTimer = findViewById(R.id.tvTimer);
+
+btnStartStop.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) {
+
+if (!isRunning) {
+handler.post(runnable); // Start the timer btnStartStop.setText("Stop Timer"); isRunning = true;
+} else {
+handler.removeCallbacks(runnable); // Stop the timer
+btnStartStop.setText("Start Timer"); isRunning = false;
+}
+}
+});
+}
+output:
+ 
+Practical 10 A] Programming Media API and Telephone API
+1.	Create a folder ‘raw’ under res
+2.	Download an mp3 file and name the file as sample_audio.mp3
+3.	Drag and drop it in the raw folder.
+
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+android:gravity="center" android:padding="20dp" android:layout_width="match_parent" android:layout_height="match_parent">
+
+<Button
+android:id="@+id/btnPlay" android:text="Play" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+<Button
+android:id="@+id/btnPause" android:text="Pause" android:layout_marginTop="20dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+</LinearLayout>
+MainActivity.java
+package com.example.pract10a;
+
+package com.example.pract9a;
+
+import android.media.MediaPlayer; import android.os.Bundle;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+private MediaPlayer mediaPlayer; private Button btnPlay, btnPause;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+btnPlay = findViewById(R.id.btnPlay); btnPause = findViewById(R.id.btnPause);
+
+// Initialize MediaPlayer with the audio file from res/raw
+mediaPlayer = MediaPlayer.create(this, R.raw.sample_audio);
+ 
+btnPlay.setOnClickListener(v -> { if (!mediaPlayer.isPlaying()) {
+mediaPlayer.start();
+}
+});
+
+btnPause.setOnClickListener(v -> { if (mediaPlayer.isPlaying()) {
+mediaPlayer.pause();
+}
+});
+}
+
+@Override
+protected void onDestroy() { super.onDestroy();
+if (mediaPlayer != null) { mediaPlayer.release(); mediaPlayer = null;
+}
+}
+}
+
+
+output:
+ 
+Telephone API Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+android:gravity="center" android:padding="20dp" android:layout_width="match_parent" android:layout_height="match_parent">
+
+<EditText  android:id="@+id/edtNumber" android:hint="Enter phone number" android:inputType="phone" android:layout_width="match_parent"
+android:layout_height="wrap_content"/>
+
+<Button
+android:id="@+id/btnCall" android:text="Call" android:layout_marginTop="20dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>
+
+MainActivity.java
+package com.example.pract10b;
+
+import android.Manifest; import android.content.Intent;
+import android.content.pm.PackageManager; import android.net.Uri;
+import android.os.Bundle; import android.widget.Button; import android.widget.EditText; import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity; import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+public class MainActivity extends AppCompatActivity { private static final int REQUEST_CALL = 1;
+EditText edtNumber; Button btnCall;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+edtNumber = findViewById(R.id.edtNumber); btnCall = findViewById(R.id.btnCall);
+ 
+btnCall.setOnClickListener(v -> makeCall());
+}
+
+private void makeCall() {
+String number = edtNumber.getText().toString().trim(); if (number.isEmpty()) {
+Toast.makeText(this, "Enter a phone number", Toast.LENGTH_SHORT).show(); return;
+}
+
+if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+!= PackageManager.PERMISSION_GRANTED) { ActivityCompat.requestPermissions(this,
+new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+} else {
+startCall(number);
+}
+}
+
+private void startCall(String number) {
+Intent callIntent = new Intent(Intent.ACTION_CALL); callIntent.setData(Uri.parse("tel:" + number)); startActivity(callIntent);
+}
+
+@Override
+public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) { if (requestCode == REQUEST_CALL) {
+if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) { makeCall();
+} else {
+Toast.makeText(this, "Permission denied to make calls", Toast.LENGTH_SHORT).show();
+}
+}
+super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+}
+}
+ 
+Androidmanifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<uses-feature android:name="android.hardware.telephony" android:required="false" />
+<uses-permission android:name="android.permission.CALL_PHONE"/>
+<application android:allowBackup="true"
+android:dataExtractionRules="@xml/data_extraction_rules" android:fullBackupContent="@xml/backup_rules" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.Pract10b">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNCHER" />
+</intent-filter>
+</activity>
+</application>
+</manifest>
+Output:
+ 
+b. Programming Security and permissions Androidmanifest.xml
+<uses-feature android:name="android.hardware.telephony" android:required="false" />
+<uses-feature android:name="android.hardware.camera" android:required="false" />
+<uses-permission android:name="android.permission.RECEIVE_SMS"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:ignore="CoarseFineLocation" />
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+android:gravity="center" android:padding="20dp" android:layout_width="match_parent" android:layout_height="match_parent">
+<Button
+android:id="@+id/btnCamera" android:text="Use Camera" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<Button
+android:id="@+id/btnLocation" android:text="Access Location" android:layout_marginTop="20dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<Button
+android:id="@+id/btnSms" android:text="Receive SMS" android:layout_marginTop="20dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>
+
+MainActivity.java
+package com.example.pract10c;
+
+import android.Manifest; import android.content.Intent;
+import android.content.pm.PackageManager; import android.location.Location;
+import android.net.Uri; import android.os.Bundle;
+import android.provider.MediaStore; import android.widget.Button; import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity; import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+ 
+public class MainActivity extends AppCompatActivity {
+private static final int CAMERA_PERMISSION_CODE = 101; private static final int LOCATION_PERMISSION_CODE = 102; private static final int SMS_PERMISSION_CODE = 103; private static final int CAMERA_INTENT_CODE = 201;
+Button btnCamera, btnLocation, btnSms; @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);  btnCamera = findViewById(R.id.btnCamera); btnLocation = findViewById(R.id.btnLocation); btnSms = findViewById(R.id.btnSms);
+btnCamera.setOnClickListener(v -> checkCameraPermission()); btnLocation.setOnClickListener(v -> checkLocationPermission()); btnSms.setOnClickListener(v -> checkSmsPermission());
+}
+// ================= CAMERA =================
+private void checkCameraPermission() {
+if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+== PackageManager.PERMISSION_GRANTED) { openCamera();
+} else {
+ActivityCompat.requestPermissions(this,
+new String[]{Manifest.permission.CAMERA},
+CAMERA_PERMISSION_CODE);
+}
+}
+private void openCamera() {
+Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+startActivityForResult(cameraIntent, CAMERA_INTENT_CODE);
+}
+}
+// ================= LOCATION =================
+private void checkLocationPermission() {
+if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+== PackageManager.PERMISSION_GRANTED) { accessLocation();
+} else {
+ActivityCompat.requestPermissions(this,
+new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+LOCATION_PERMISSION_CODE);
+}
+}
+private void accessLocation() {
+// For demonstration, show mock coordinates double latitude = 12.9716; // Example: Bangalore double longitude = 77.5946;
+Toast.makeText(this, "Latitude: " + latitude + "\nLongitude: " + longitude, Toast.LENGTH_LONG).show();
+}
+// ================= RECEIVE SMS =================
+private void checkSmsPermission() {
+if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
+ 
+== PackageManager.PERMISSION_GRANTED) {
+Toast.makeText(this, "SMS Permission Granted ✅", Toast.LENGTH_SHORT).show();
+} else {
+ActivityCompat.requestPermissions(this,
+new String[]{Manifest.permission.RECEIVE_SMS},
+SMS_PERMISSION_CODE);
+}
+}
+// ================= HANDLE PERMISSION RESULTS =================
+@Override
+public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) { if (requestCode == CAMERA_PERMISSION_CODE) {
+if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) openCamera();
+else Toast.makeText(this, "Camera Permission Denied ❌", Toast.LENGTH_SHORT).show();
+} else if (requestCode == LOCATION_PERMISSION_CODE) {
+if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) accessLocation();
+else Toast.makeText(this, "Location Permission Denied ❌", Toast.LENGTH_SHORT).show();
+} else if (requestCode == SMS_PERMISSION_CODE) {
+if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) Toast.makeText(this, "SMS Permission Granted ✅", Toast.LENGTH_SHORT).show();
+else Toast.makeText(this, "SMS Permission Denied ❌", Toast.LENGTH_SHORT).show();
+}
+super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+}
+}
+
+Output:

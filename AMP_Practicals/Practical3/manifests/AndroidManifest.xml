@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.practical3">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <activity android:name=".MainActivityRelative"        android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivityLinearVertical"   android:exported="false" />
+        <activity android:name=".MainActivityLinearHorizontal" android:exported="false" />
+        <activity android:name=".MainActivityTable"            android:exported="false" />
+        <activity android:name=".MainActivityScroll"           android:exported="false" />
+        <activity android:name=".MainActivityAbsolute"         android:exported="false" />
+        <activity android:name=".MainActivityListView"         android:exported="false" />
+        <activity android:name=".MainActivityGridView"         android:exported="false" />
+        <activity android:name=".MainActivityFrame"            android:exported="false" />
+
+    </application>
+
+</manifest>

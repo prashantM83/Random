@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/lblComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comments"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+
+    <EditText
+        android:id="@+id/txtComments"
+        android:layout_width="fill_parent"
+        android:layout_height="69dp"
+        android:layout_below="@id/lblComments"
+        android:layout_alignLeft="@id/lblComments"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-4dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:text="Show"
+        android:onClick="show"
+        android:layout_below="@id/txtComments"
+        android:layout_alignLeft="@id/txtComments" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:onClick="clear"
+        android:layout_below="@id/txtComments"
+        android:layout_alignRight="@id/txtComments" />
+
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.practical7">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- 7a: Service -->
+        <activity android:name=".MainActivityService" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service android:name=".MyService" android:exported="false" />
+
+        <!-- 7b: Notification -->
+        <activity android:name=".MainActivityNotification" android:exported="false" />
+
+        <!-- 7c: Broadcast Receiver -->
+        <activity android:name=".MainActivityBroadcast" android:exported="false" />
+
+    </application>
+
+</manifest>

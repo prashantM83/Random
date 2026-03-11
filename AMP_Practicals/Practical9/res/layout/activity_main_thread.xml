@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 9a: Thread Demo Layout -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Button
+        android:id="@+id/btnStartThread"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Thread" />
+
+    <TextView
+        android:id="@+id/tvThreadStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thread not started"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>

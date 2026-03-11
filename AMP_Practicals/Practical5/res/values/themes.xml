@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.Practical5" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Customize your theme here -->
+    </style>
+    <style name="Theme.Practical5" parent="Base.Theme.Practical5" />
+</resources>
